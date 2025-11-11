@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>9357afc7 - Rock Paper Scissors</title>
+    <title>9357afc7 - Anushka Chauhan - WA4E Assignments</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
+            max-width: 700px;
             margin: 50px auto;
             padding: 20px;
             background-color: #f5f5f5;
@@ -20,9 +20,21 @@
             color: #333;
             text-align: center;
         }
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
         p {
             color: #666;
             line-height: 1.6;
+        }
+        .assignment-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
         }
         a {
             color: #007bff;
@@ -37,33 +49,57 @@
             background-color: #007bff;
             color: white;
             border-radius: 4px;
-            margin-top: 20px;
+            margin: 10px 10px 10px 0;
         }
         .button:hover {
             background-color: #0056b3;
             text-decoration: none;
         }
+        .info-section {
+            background-color: #e7f3ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Rock Paper Scissors</h1>
-        <p><strong>Please log in to play Rock Paper Scissors</strong></p>
-        <p>This is a simple game where you can play Rock, Paper, Scissors against the computer.</p>
-        <p>You must be logged in to play the game.</p>
-        <a href="login.html" class="button">Go to Login</a>
+        <h1>WA4E Assignments</h1>
+        
+        <div class="info-section">
+            <p><strong>Student:</strong> Anushka Chauhan</p>
+            <p><strong>Course:</strong> Building Web Applications in PHP</p>
+            <p><strong>Grading Code:</strong> 9357afc7</p>
+        </div>
+        
+        <div class="assignment-box">
+            <h2>Assignment 1: Guessing Game</h2>
+            <p>A simple guessing game that accepts GET parameters and validates user input.</p>
+            <p><strong>Correct Answer:</strong> 27</p>
+            <a href="guess.html" class="button">Play Guessing Game</a>
+            <a href="guess.html?guess=27" class="button">Test with Correct Answer</a>
+        </div>
+        
+        <div class="assignment-box">
+            <h2>Assignment 2: Rock Paper Scissors</h2>
+            <p>A two-page web application to play Rock, Paper, Scissors with login authentication.</p>
+            <p><strong>Password:</strong> php123</p>
+            <a href="login.html" class="button">Go to Login</a>
+            <a href="game.html" class="button">Go to Game (requires login)</a>
+        </div>
         
         <hr style="margin: 30px 0;">
         
-        <h2>Assignment Information</h2>
-        <p><strong>Student:</strong> Anushka Chauhan</p>
-        <p><strong>Course:</strong> Building Web Applications in PHP</p>
-        <p><strong>Assignment:</strong> WA4E Rock Paper Scissors</p>
-        <p><strong>Grading Code:</strong> 9357afc7</p>
-        
-        <h2>Login Credentials</h2>
-        <p><strong>Password:</strong> php123</p>
-        <p>Enter any username and use the password above to login.</p>
+        <h2>Test URLs for Autograder</h2>
+        <ul>
+            <li><a href="guess.html">guess.html</a> - Missing parameter</li>
+            <li><a href="guess.html?guess=">guess.html?guess=</a> - Empty guess</li>
+            <li><a href="guess.html?guess=abc">guess.html?guess=abc</a> - Non-numeric</li>
+            <li><a href="guess.html?guess=10">guess.html?guess=10</a> - Too low</li>
+            <li><a href="guess.html?guess=50">guess.html?guess=50</a> - Too high</li>
+            <li><a href="guess.html?guess=27">guess.html?guess=27</a> - Correct!</li>
+        </ul>
     </div>
 </body>
 </html>
