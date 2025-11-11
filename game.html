@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>9357afc7 - Rock Paper Scissors Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .welcome {
+            color: #28a745;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .game-controls {
+            margin: 30px 0;
+            text-align: center;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+            min-width: 150px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .play-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .play-btn:hover {
+            background-color: #218838;
+        }
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+        }
+        .result h2 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        .test-results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .win {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .lose {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .tie {
+            color: #ffc107;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rock Paper Scissors Game</h1>
+        <div class="welcome" id="welcomeMessage"></div>
+        
+        <div class="game-controls">
+            <select id="humanPlay">
+                <option value="0">Rock</option>
+                <option value="1">Paper</option>
+                <option value="2">Scissors</option>
+                <option value="3">Test</option>
+            </select>
+            <button class="play-btn" onclick="playGame()">Play</button>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+        
+        <div id="resultArea"></div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        function checkLogin() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const nameParam = urlParams.get('name');
+            const sessionName = sessionStorage.getItem('userName');
+            
+            if (!nameParam && !sessionName) {
+                document.body.innerHTML = '<div style="text-align: center; margin-top: 100px; font-size: 20px; color: #dc3545;">Name parameter missing</div>';
+                return false;
+            }
+            
+            const userName = nameParam || sessionName;
+            document.getElementById('welcomeMessage').textContent = 'Welcome ' + userName + '!';
+            return true;
+        }
+        
+        // Check function - determines winner
+        function check(computer, human) {
+            if (computer === human) {
+                return "Tie";
+            }
+            
+            // Rock (0) beats Scissors (2)
+            // Paper (1) beats Rock (0)
+            // Scissors (2) beats Paper (1)
+            if ((computer === 0 && human === 2) ||
+                (computer === 1 && human === 0) ||
+                (computer === 2 && human === 1)) {
+                return "You Lose";
+            }
+            
+            return "You Win";
+        }
+        
+        // Play the game
+        function playGame() {
+            const humanPlay = parseInt(document.getElementById('humanPlay').value);
+            const names = ["Rock", "Paper", "Scissors"];
+            const resultArea = document.getElementById('resultArea');
+            
+            // Test mode
+            if (humanPlay === 3) {
+                let testOutput = '<div class="result"><h2>Test Results</h2><div class="test-results">';
+                
+                for (let c = 0; c < 3; c++) {
+                    for (let h = 0; h < 3; h++) {
+                        const result = check(c, h);
+                        let resultClass = '';
+                        if (result === 'You Win') resultClass = 'win';
+                        else if (result === 'You Lose') resultClass = 'lose';
+                        else resultClass = 'tie';
+                        
+                        testOutput += 'Human=' + names[h] + ' Computer=' + names[c] + ' Result=<span class="' + resultClass + '">' + result + '</span>\n';
+                    }
+                }
+                
+                testOutput += '</div></div>';
+                resultArea.innerHTML = testOutput;
+                return;
+            }
+            
+            // Normal play
+            const computerPlay = Math.floor(Math.random() * 3);
+            const result = check(computerPlay, humanPlay);
+            
+            let resultClass = '';
+            if (result === 'You Win') resultClass = 'win';
+            else if (result === 'You Lose') resultClass = 'lose';
+            else resultClass = 'tie';
+            
+            resultArea.innerHTML = '<div class="result">' +
+                '<h2>Game Result</h2>' +
+                '<p><strong>Your Play:</strong> ' + names[humanPlay] + '</p>' +
+                '<p><strong>Computer Play:</strong> ' + names[computerPlay] + '</p>' +
+                '<p><strong>Result:</strong> <span class="' + resultClass + '">' + result + '</span></p>' +
+                '</div>';
+        }
+        
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('userName');
+            window.location.href = 'index.html';
+        }
+        
+        // Initialize
+        checkLogin();
+    </script>
+</body>
+</html>
